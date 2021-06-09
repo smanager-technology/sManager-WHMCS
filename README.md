@@ -2,12 +2,12 @@
 Our goal is to reach the doorsteps of every merchant with the help of information and applications provided by sMANAGER, an application with various information related to the business's daily sales, bookkeeping, buying goods, keeping personal accounts very easily and accurately.
 We are providing sManager Online Payment for WHMCS.
 
-###Prerequisites
+<h3>Prerequisites</h3>
 1. WHMCS V8
 2. cURL php extension.
 3. [sManager Subscription](https://play.google.com/store/apps/details?id=xyz.sheba.managerapp)
 
-###How to install the WHMCS module?
+<h3>>How to install the WHMCS module?</h3>
 To install the WHMCS payment module, follow the instructions below:
 
 1. Download the WHMCS payment module from GitHub page.
@@ -23,13 +23,13 @@ To install the WHMCS payment module, follow the instructions below:
    - Client Secret
 9. The module is now and ready.
 
-###Image Reference
+<h3>Image Reference</h3>
 > Payment Methods
 > <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/payment_methods.png" alt="Payment Methods" />
-<br />
+
 > Gateway Configuration Page
 > <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/Gatway_Configuration_Page.png" alt="Payment Methods" />
-<br />
+
 > sManager Online Payment
 <br />
 > <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/sManager_online_payment.png" alt="Payment Methods" />
