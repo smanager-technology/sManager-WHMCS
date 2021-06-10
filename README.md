@@ -3,12 +3,14 @@ Our goal is to reach the doorsteps of every merchant with the help of informatio
 We are providing sManager Online Payment for WHMCS.
 
 <h3>Prerequisites</h3>
+
 1. WHMCS V8
 2. cURL php extension.
 3. [sManager Subscription](https://play.google.com/store/apps/details?id=xyz.sheba.managerapp)
 
 <h3>How to install the WHMCS module?</h3>
 To install the WHMCS payment module, follow the instructions below:
+<br />
 
 1. Download the WHMCS payment module from GitHub page.
 2. Unzip the module to a temporary location on your computer.
