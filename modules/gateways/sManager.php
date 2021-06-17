@@ -21,7 +21,10 @@
  *
  * @see https://developers.whmcs.com/payment-gateways/
  *
- * @copyright Copyright (c) WHMCS Limited 2017
+ * @author Riyad Mohammad riyadmohammadraju@gmail.com
+ * @author Saleh Ahmad salehoyon@hotmail.com
+ *
+ * @copyright Copyright (c) WHMCS Limited 2021
  * @license http://www.whmcs.com/license/ WHMCS Eula
  */
 
