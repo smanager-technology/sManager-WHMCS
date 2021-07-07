@@ -39,7 +39,7 @@ To install the WHMCS payment module, follow the instructions below:
 > <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/payment_methods.png" alt="Payment Methods" />
 
 > Gateway Configuration Page
-> <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/Gatway_Configuration_Page.png" alt="Payment Methods" />
+> <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/Gateway_Configuration_Page.png" alt="Payment Methods" />
 
 > sManager Online Payment
 > <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/sManager_online_payment.png" alt="Payment Methods" />
