@@ -42,12 +42,14 @@ if (!defined("WHMCS")) {
  *
  * @return array
  */
-function gatewaymodule_MetaData()
-{
-    return array(
-        'DisplayName' => 'sManager Online Payment',
-        'APIVersion' => '1.1', // Use API Version 1.0
-    );
+if (!function_exists('gatewaymodule_MetaData')) {
+    function gatewaymodule_MetaData()
+    {
+        return array(
+            'DisplayName' => 'sManager Online Payment',
+            'APIVersion' => '1.1', // Use API Version 1.0
+        );
+    }
 }
 
 /**
@@ -70,36 +72,48 @@ function gatewaymodule_MetaData()
  *
  * @return array
  */
-function sManager_config()
-{
-    $configarray= array(
+if (!function_exists('sManager_config')) {
+    function sManager_config()
+    {
+        $configarray= array(
 
-        'FriendlyName' => [
-            'Type'  => 'System',
-            'Value' => 'sManager Online Payment',
-        ],
-       
-        // client id
-        'clientID' => [
-            'FriendlyName' => 'Client Id',
-            'Type'         => 'password',
-            'Size'         => '1000',
-            'Default'      => '',
-            'Description'  => 'Enter Client ID here',
-        ],
+            'FriendlyName' => [
+                'Type'  => 'System',
+                'Value' => 'sManager Online Payment',
+            ],
+            'clientID' => [
+                'FriendlyName' => 'Client Id',
+                'Type'         => 'password',
+                'Size'         => '1000',
+                'Default'      => '',
+                'Description'  => '<br>Enter Client ID here',
+            ],
+            'clientSecret' => [
+                'FriendlyName' => 'Client Secret',
+                'Type'         => 'password',
+                'Size'         => '1000',
+                'Default'      => '',
+                'Description'  => '<br>Enter Client Secret here',
+            ],
+            'serviceChargeInPercentage' => [
+                'FriendlyName' => 'Additional Service Charge (%)',
+                'Type'         => 'text',
+                'Default'      => '0.00%',
+                'Description'  => '<br> if you want to add Additional Service Charge in percentage (%), then enter the ratio in integer format i.e. for 2%, provide the input value 2.',
+            ],
+            'serviceChargeInAmount' => [
+                'FriendlyName' => 'Additional Service Charge (&#2547;)',
+                'Type'         => 'text',
+                'Default'      => '0.00',
+                'Description'  => '<br>if you want to add Additional Service Charge in fixed amount (&#2547;), then enter the ratio in integer format i.e. for &#2547;3, provide the input value 3.',
+            ],
 
-        // client secret
-        'clientSecret' => [
-            'FriendlyName' => 'Client Secret',
-            'Type'         => 'password',
-            'Size'         => '1000',
-            'Default'      => '',
-            'Description'  => 'Enter Client Secret here',
-        ],
-    );
+        );
 
-    return $configarray;
+        return $configarray;
+    }
 }
+
 
 /**
  * Payment link.
@@ -115,77 +129,96 @@ function sManager_config()
  *
  * @return string
  */
-function sManager_link($params)
-{
-    # Gateway Specific Variables
-    $clientID     = $params['clientID'];
-    $clientSecret = $params['clientSecret'];
-    $gatewaytype  = $params['gateway_type'];
-    $systemUrl    = $params['systemurl'];
-    
-    $url = 'https://api.sheba.xyz/v1/ecom-payment/initiate';
+if (!function_exists('sManager_link')) {
+    function sManager_link($params)
+    {
+        # Gateway Specific Variables
+        $clientID                  = $params['clientID'];
+        $clientSecret              = $params['clientSecret'];
+        $gatewaytype               = $params['gateway_type'];
+        $systemUrl                 = $params['systemurl'];
+        $serviceChargeInPercentage = $params['serviceChargeInPercentage'];
+        $serviceChargeInAmount     = $params['serviceChargeInAmount'];
 
-    # Invoice Variables
-    $invoiceid   = $params['invoiceid'];
-    $description = $params["description"];
-    $amount      = $params['amount']; # Format: ##.##
-    $currency    = $params['currency']; # Currency Code
-    $product     = $params['type'];
+        $url = 'https://api.sheba.xyz/v1/ecom-payment/initiate';
 
-    // Client Parameters
+        # Invoice Variables
+        $invoiceid   = $params['invoiceid'];
+        $description = $params["description"];
+        $currency    = $params['currency']; # Currency Code
+        $product     = $params['type'];
+        $amount      = $params['amount']; # Format: ##.#
 
-    $customerName    = $params['clientdetails']['name'];
-    $customerPhoneNo = $params['clientdetails']['phoneNumber'];
-    $uuid            = $params['clientdetails']['uuid'];
-    
+        if (!$serviceChargeInPercentage && !$serviceChargeInAmount) {
+            $amount = $params['amount']; ;
+        }
 
-    // System Parameters
-    $companyname = $params['companyname'];
-    $systemurl   = $params['systemurl'];
-    $currency    = $params['currency'];
-    $returnurl   = $params['returnurl'];
+        if ($serviceChargeInPercentage && !$serviceChargeInAmount) {
+            $amount += $amount * ($serviceChargeInPercentage / 100);
+        }
 
-    $url_last_slash = substr($systemurl, strrpos($systemurl, '/') + 0);
-    $trnxId = uniqid();
+        if (!$serviceChargeInPercentage && $serviceChargeInAmount) {
+            $amount += $serviceChargeInAmount;
+        }
 
-    	if ($url_last_slash == "/") {
+        if ($serviceChargeInPercentage && $serviceChargeInAmount) {
+            $amount += ($amount * ($serviceChargeInPercentage/100)) + $serviceChargeInAmount;
+        }
+
+        $name  = $params['clientdetails']['firstname'] . ' ' . $params['clientdetails']['lastname'];
+        $phone = $params['clientdetails']['phonenumber'];
+
+        # Client Parameters
+        $customerName    = $name;
+        $customerPhoneNo = $phone;
+        $uuid            = $params['clientdetails']['uuid'];
+
+        # System Parameters
+        $companyname = $params['companyname'];
+        $systemurl   = $params['systemurl'];
+        $currency    = $params['currency'];
+        $returnurl   = $params['returnurl'];
+
+        $url_last_slash = substr($systemurl, strrpos($systemurl, '/') + 0);
+        $trnxId = uniqid();
+
+        if ($url_last_slash == "/") {
             $success_url = $systemurl.'/modules/gateways/callback/sManagermodule.php?transaction_id='.$trnxId . '&invoiceid=' . $invoiceid;
             $fail_url    = $systemurl."clientarea.php?action=services";
-    	} else {
+        } else {
             $success_url = $systemurl.'/modules/gateways/callback/sManagermodule.php?transaction_id='.$trnxId . '&invoiceid=' . $invoiceid;
             $fail_url = $systemurl."clientarea.php?action=services";
 
-    	}
+        }
 
-    $api_endpoint = $url;
+        $api_endpoint = $url;
+        $postfields = [
+            'amount'          => $amount,
+            'transaction_id'  => $trnxId,
+            'success_url'     => $success_url,
+            'fail_url'        => $fail_url,
+            'customer_name'   => $customerName,
+            'customer_mobile' => $customerPhoneNo,
+            'purpose'         => 'Online Payment'
+        ];
 
-    $postfields = [
-        'amount'          => $amount,
-        'transaction_id'  => $trnxId,
-        'success_url'     => $success_url,
-        'fail_url'        => $fail_url,
-        'customer_name'   => $customerName,
-        'customer_mobile' => $customerPhoneNo,
-        'purpose'         => 'Online Payment'
-    ];
+        if ($gatewaytype == "on") {
+            ?>
+            <script type="text/javascript">
+                (function (window, document) {
+                    var loader = function () {
+                        var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+                        script.src = "<?php echo $url; ?>?" + Math.random().toString(36).substring(7);
+                        tag.parentNode.insertBefore(script, tag);
+                    };
 
-    if($gatewaytype == "on") {
-    ?>
-    <script type="text/javascript">
-        (function (window, document) {
-            var loader = function () {
-                var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
-                script.src = "<?php echo $url; ?>?" + Math.random().toString(36).substring(7);
-                tag.parentNode.insertBefore(script, tag);
-            };
-        
-            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-        })(window, document);
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <?php
-            
-    return '<button class="btn btn-success" id="sManager pay"
+                    window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                })(window, document);
+            </script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <?php
+
+            return '<button class="btn btn-success" id="sManager pay"
         token="'.$uuid.'"
         postdata=""
         order="'.$invoiceid.'"
@@ -200,12 +233,12 @@ function sManager_link($params)
             changeObj();
         </script>';
 
-    } else{
-        $headerInfo = array(
-            'client-id: ' . $clientID,
-            'client-secret: ' . $clientSecret,
-            'Accept: application/json'
-        );
+        } else{
+            $headerInfo = array(
+                'client-id: ' . $clientID,
+                'client-secret: ' . $clientSecret,
+                'Accept: application/json'
+            );
 
             $handle = curl_init();
             curl_setopt($handle, CURLOPT_URL, $api_endpoint );
@@ -218,8 +251,8 @@ function sManager_link($params)
 
             curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, FALSE); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
-            
-            
+
+
             $content = curl_exec($handle);
             $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
 
@@ -236,8 +269,8 @@ function sManager_link($params)
                 $smanager = json_decode($smanagerResponse, true );
                 echo "Code: " . $smanager['code'] . " & Failed Reason: " . $smanager['message'];
                 exit;
-            } 
-            
+            }
+
             # PARSE THE JSON RESPONSE
             $smanager = json_decode($smanagerResponse, true );
 
@@ -246,7 +279,7 @@ function sManager_link($params)
             if ($code !== 200) {
                 echo "Code: " . $smanager['code'] . " & Failed Reason: " . $smanager['message'];
             }
-            
+
             if (isset($smanager['data']['link']) && $smanager['data']['link'] != '')  {
                 echo "
                 <script>
@@ -255,4 +288,5 @@ function sManager_link($params)
                 ";
             }
         }
-     }
+    }
+}

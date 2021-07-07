@@ -12,7 +12,6 @@
     # Gateway Module Name
     $gatewaymodule = "sManager";
 
-
     $GATEWAY = getGatewayVariables($gatewaymodule);
 
     # Checks gateway module is active before accepting callback
@@ -62,7 +61,7 @@
             $amount = $responsejSON['data']['amount'];
 
             # Checks invoice ID is a valid invoice number or ends processing
-            $invoiceid = checkCbInvoiceID($invoiceid,$GATEWAY["name"]);
+            $invoiceid = checkCbInvoiceID($invoiceid, $GATEWAY["name"]);
 
             $orderStatus = mysql_fetch_assoc(select_query('tblinvoices', 'status', ["invoicenum" => $invoiceid]));
 
@@ -87,6 +86,7 @@
                 $command = 'UpdateInvoice';
 
                 # todo generate username and password
+                // See https://developers.whmcs.com/api/authentication
                 $postData = [
                     'invoiceid' => $invoiceid,
                     'status'    => 'Paid',
