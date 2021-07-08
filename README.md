@@ -20,7 +20,7 @@ To install the WHMCS payment module, follow the instructions below:
 6. Using the Top Right Menu, click <code>System Settings</code>. Search <code>API Credentials</code> and click.
 7. Click <code>API Role</code>, click create API Role. Then give API role name and description. The description is optional, select the billing option from Allowed API Actions and hit save.
 8. Click <code>API Credentials</code>, click <code>Generate New API Credentials</code>, select Admin User and API Role(s), hit <code>Generate</code>.
-9. Open sManagermodule.php <code>(modules/gateways/callback/sManagermodule.php)</code> with Notepad.
+9. Open sManagermodule.php <code>(modules/gateways/callback/sManagermodule.php)</code> with file editor.
 10. Change the value of <code>$username</code> with <code>Identifier</code> generated in API Credentials.
 11. Change the value of <code>$password</code> with <code>Secret</code> generated in API Credentials.
 12. Save the <code>sManagermodule.php</code> file.
