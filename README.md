@@ -38,7 +38,16 @@ To install the WHMCS payment module, follow the instructions below:
 
 <h3>Image Reference</h3>
 
-> Payment Methods
+> System Settings
+> <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/WHMCS-System-Settings.png" alt="WHMCS - System Settings" />
+
+> API Credentials
+> <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/API_Credentials.PNG" alt="API Credentials" />
+
+> Generate New Api Credential
+> <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/generate_new_api_credentials.PNG" alt="Generate New Api Credential" />
+
+> Payment Gateways
 > <img src="https://raw.githubusercontent.com/smanager-technology/sManager-WHMCS/master/images/payment_methods.png" alt="Payment Methods" />
 
 > Gateway Configuration Page
