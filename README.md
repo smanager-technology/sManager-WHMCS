@@ -17,20 +17,23 @@ To install the WHMCS payment module, follow the instructions below:
 3. Copy the <code>modules</code> folder from the archive to your base <code>whmcs</code> folder (using FTP program or similar)
 4. This should NOT overwrite any existing files or folders and merely supplement them with the SSLWireless files
 5. Login to the WHMCS Administrator console
-6. Using the main menu, navigate to <code>Setup > Payments > Payment Gateways</code>
-7. Select <code>sManager Online Payment</code> from the <code>All Payment Gateways</code> drop-down list and click <code>Activate</code>
-8. Enter the following details under the sManager Online Payment heading and click <code>Save Changes</code>:
+6. Using the Top Right Menu, click <code>System Settings</code>. Search <code>API Credentials</code> and click.
+7. Click <code>API Role</code>, click create API Role. Then give API role name and description. The description is optional, select the billing option from Allowed API Actions and hit save.
+8. Click <code>API Credentials</code>, click <code>Generate New API Credentials</code>, select Admin User and API Role(s), hit <code>Generate</code>.
+9. Open sManagermodule.php <code>(modules/gateways/callback/sManagermodule.php)</code> with Notepad.
+10. Change the value of <code>$username</code> with <code>Identifier</code> generated in API Credentials.
+11. Change the value of <code>$password</code> with <code>Secret</code> generated in API Credentials.
+12. Save the <code>sManagermodule.php</code> file.
+13. Using the Top Right Menu, navigate to <code>System Settings > Payment Gateways</code>
+14. Navigate to <code>Manage Existing Gateways</code>
+15. Enter the following details under the sManager Online Payment heading and click <code>Save Changes</code>:
    - Display Name
    - Client Id
    - Client Secret
-   - Additional Charge (if needed)
-9. Click <code>System Settings</code>. Search <code>API Credentials</code> and click.
-10. Click <code>API Role</code>, click create API Role. Then give API role name and description. The description is optional, select the billing option from Allowed API Actions and hit save.
-11. Click <code>API Credentials</code>, click generate new API Credentials, select admin use and select API role then hit generate.
-12. Open sManagermodule.php <code>(modules/gateways/callback/sManagermodule.php)</code> with Notepad.
-13. Change the value of <code>$username</code> with Past Identifier generated in API Credentials.
-14. Change the value of <code>$password</code> with Past Secret generated in API Credentials.
-15. Save the <code>sManagermodule.php</code> file.
+   - Additional Service Charge (%) (if needed)
+   - Additional Service Charge (৳) (If Needed)
+   - Convert To For Processing ()
+
 16. The module is now ready to use.
 
 <h3>Image Reference</h3>
