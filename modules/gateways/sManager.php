@@ -83,7 +83,7 @@ if (!function_exists('sManager_config')) {
             ],
             'clientID' => [
                 'FriendlyName' => 'Client Id',
-                'Type'         => 'password',
+                'Type'         => 'text',
                 'Size'         => '1000',
                 'Default'      => '',
                 'Description'  => '<br>Enter Client ID here',
@@ -98,13 +98,13 @@ if (!function_exists('sManager_config')) {
             'serviceChargeInPercentage' => [
                 'FriendlyName' => 'Additional Service Charge (%)',
                 'Type'         => 'text',
-                'Default'      => '0.00%',
+                'Default'      => '0',
                 'Description'  => '<br> if you want to add Additional Service Charge in percentage (%), then enter the ratio in integer format i.e. for 2%, provide the input value 2.',
             ],
             'serviceChargeInAmount' => [
                 'FriendlyName' => 'Additional Service Charge (&#2547;)',
                 'Type'         => 'text',
-                'Default'      => '0.00',
+                'Default'      => '0',
                 'Description'  => '<br>if you want to add Additional Service Charge in fixed amount (&#2547;), then enter the ratio in integer format i.e. for &#2547;3, provide the input value 3.',
             ],
 
